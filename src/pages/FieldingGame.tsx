@@ -253,17 +253,18 @@ const FieldingGame = () => {
     }
   }, []);
 
-  // Game loop
+  // Manual hit function - spawns a ball when user clicks
+  const handleHit = useCallback(() => {
+    if (!isPlaying || gameState.isGameOver || isModalOpen || balls.length > 0) return;
+    spawnBall();
+    setLastResult(null);
+  }, [isPlaying, gameState.isGameOver, isModalOpen, balls.length, spawnBall]);
+
+  // Game loop - only updates ball positions and checks catches/misses (no auto spawn)
   useEffect(() => {
     if (!isPlaying || gameState.isGameOver) return;
 
-    const gameLoop = (timestamp: number) => {
-      // Spawn new balls periodically
-      if (timestamp - lastBallTime.current > 2000 && balls.length < 2) {
-        lastBallTime.current = timestamp;
-        spawnBall();
-      }
-
+    const gameLoop = () => {
       // Update ball positions
       setBalls(prev => prev.map(ball => {
         const dx = ball.targetX - ball.x;
@@ -308,7 +309,7 @@ const FieldingGame = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isPlaying, gameState.isGameOver, balls, glovePosition, spawnBall, handleCatch, handleMiss]);
+  }, [isPlaying, gameState.isGameOver, balls, glovePosition, handleCatch, handleMiss]);
 
   // Mouse/touch controls
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -486,8 +487,18 @@ const FieldingGame = () => {
               )}
             </div>
 
-            {/* Controls Info */}
-            <div className="bg-card p-4 border-t border-border text-center">
+            {/* Hit Button & Controls Info */}
+            <div className="bg-card p-4 border-t border-border text-center space-y-3">
+              {isPlaying && !gameState.isGameOver && (
+                <Button 
+                  onClick={handleHit} 
+                  size="lg" 
+                  disabled={isModalOpen || balls.length > 0}
+                  className="gap-2 text-lg px-8"
+                >
+                  ⚾ 타격하기
+                </Button>
+              )}
               <p className="text-sm text-muted-foreground">
                 💡 마우스나 터치로 글러브(🧤)를 움직여 공(⚾)을 잡으세요!
               </p>
