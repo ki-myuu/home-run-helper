@@ -74,7 +74,7 @@ export const battingSituations: GameSituation[] = [
     id: 'ball',
     name: '볼',
     description: '스트라이크 존을 벗어난 투구',
-    detailedExplanation: '투수가 던진 공이 스트라이크 존을 벗어났고, 타자가 스윙하지 않았을 때 볼이 선언됩니다. 4볼이 되면 타자는 1루로 걸어갑니다(볼넷).',
+    detailedExplanation: '투수가 던진 공이 스트라이크 존을 벗어났고, 타자가 스윙하지 않았을 때 볼이 선언됩니다. 4볼이 되면 타자는 1루로 걸어갑니다(볼넷).111',
     whenItHappens: '공이 스트라이크 존 밖으로 지나가고 타자가 스윙하지 않았을 때',
   },
   {
