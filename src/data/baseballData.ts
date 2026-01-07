@@ -74,7 +74,7 @@ export const battingSituations: GameSituation[] = [
     id: 'ball',
     name: '볼',
     description: '스트라이크 존을 벗어난 투구',
-    detailedExplanation: '투수가 던진 공이 스트라이크 존을 벗어났고, 타자가 스윙하지 않았을 때 볼이 선언됩니다. 4볼이 되면 타자는 1루로 걸어갑니다(볼넷).111',
+    detailedExplanation: '투수가 던진 공이 스트라이크 존을 벗어났고, 타자가 스윙하지 않았을 때 볼이 선언됩니다. 4볼이 되면 타자는 1루로 걸어갑니다(볼넷).',
     whenItHappens: '공이 스트라이크 존 밖으로 지나가고 타자가 스윙하지 않았을 때',
   },
   {
@@ -83,7 +83,7 @@ export const battingSituations: GameSituation[] = [
     description: '4개의 볼로 타자가 1루로 진출하는 것',
     detailedExplanation: '한 타석에서 볼이 4개가 되면 타자는 자동으로 1루로 진루합니다. 이를 "걸어나간다"고도 표현합니다.',
     whenItHappens: '볼 카운트가 4가 되었을 때',
-    funFact: '출루율에는 볼넷도 포함됩니다. 선구안이 좋은 타자의 중요한 능력!'
+    funFact: '출루율에는 볼넷도 포함됩니다. 볼/스트라이크를 구분하는 선구안 능력은 타자의 중요한 능력!'
   },
   {
     id: 'strikeout',
@@ -91,7 +91,7 @@ export const battingSituations: GameSituation[] = [
     description: '3개의 스트라이크로 타자가 아웃되는 것',
     detailedExplanation: '스트라이크가 3개가 되면 타자는 아웃됩니다. 헛스윙 삼진과 루킹 삼진(지켜보기만 한 삼진)이 있습니다.',
     whenItHappens: '스트라이크 카운트가 3이 되었을 때',
-    funFact: '포수가 세 번째 스트라이크를 놓치면 "낫아웃"으로 타자가 1루로 뛸 수 있습니다!'
+    funFact: '포수가 세 번째 스트라이크 공을 잡기 전에 땅에 먼저 닿으면 "낫아웃"으로 타자가 1루로 뛸 수 있습니다!'
   },
   {
     id: 'foul',
@@ -111,11 +111,11 @@ export const battingSituations: GameSituation[] = [
   },
   {
     id: 'hitbypitch',
-    name: '몸에 맞는 공 (사구)',
+    name: '몸에 맞는 공 (사(死)구)',
     description: '투수가 던진 공이 타자의 몸에 맞는 것',
     detailedExplanation: '투수의 공이 타자 몸에 맞으면 타자는 자동으로 1루로 진루합니다. 단, 타자가 스트라이크 존 안의 공에 맞거나 피하려 하지 않으면 인정되지 않을 수 있습니다.',
     whenItHappens: '투구가 타자의 몸(유니폼 포함)에 맞을 때',
-    funFact: '일부러 맞으려고 하면 심판이 인정하지 않습니다!'
+    funFact: '출루를 위해 일부러 맞으려고 하면 심판이 인정하지 않습니다!'
   },
   {
     id: 'intentionalwalk',
@@ -131,7 +131,8 @@ export const battingSituations: GameSituation[] = [
     description: '특정 상황에서 내야 뜬공이 잡히지 않아도 자동 아웃',
     detailedExplanation: '주자가 1, 2루 또는 만루이고 아웃 카운트가 0 또는 1아웃일 때, 내야에 뜬공이 오르면 심판이 인필드 플라이를 선언합니다. 이 경우 공이 잡히든 안 잡히든 타자는 자동 아웃입니다.',
     whenItHappens: '0-1아웃, 1·2루 또는 만루에서 내야 뜬공',
-    funFact: '수비수가 일부러 공을 떨어뜨려 병살을 노리는 것을 방지하는 규칙입니다.'
+    funFact: '수비수가 일부러 공을 떨어뜨려 병살을 노리는 것을 방지하는 규칙입니다.',
+    relatedTerms: ['병살타']
   },
   {
     id: 'sacrifice',
@@ -210,8 +211,8 @@ export const fieldingSituations: GameSituation[] = [
     id: 'tagup',
     name: '태그업',
     description: '플라이볼이 잡힌 후 베이스를 밟고 다음 베이스로 진루하는 것',
-    detailedExplanation: '뜬공이 잡히면 주자는 원래 베이스로 돌아가거나, 공이 잡힌 순간 베이스를 밟고 있다가 다음 베이스로 뛸 수 있습니다. 이것이 태그업입니다.',
-    whenItHappens: '플라이볼이 잡힌 후',
+    detailedExplanation: '플라이볼이 잡히면 주자는 원래 베이스에 있어야 하는는 의무가 있으나, 공이 잡힌 순간 원래 베이스를 밟고 있다가 다음 베이스로 뛸 수 있습니다. 이것이 태그업입니다.',
+    whenItHappens: '플라이볼이 잡혔을 때',
     funFact: '태그업을 제때 하면 아웃 상황에서도 득점이 가능합니다!'
   },
   {
@@ -233,7 +234,7 @@ export const fieldingSituations: GameSituation[] = [
     id: 'stolen_base',
     name: '도루',
     description: '투수가 홈으로 던지는 동안 주자가 다음 베이스로 달려가는 것',
-    detailedExplanation: '주자가 투수의 투구 동작을 보고 빠르게 다음 베이스로 달려가 안전하게 도착하면 도루 성공입니다.',
+    id: 'stolen_base',n: '주자가 투수의 투구 동작을 보고 빠르게 다음 베이스로 달려가 안전하게 도착하면 도루 성공입니다.',
     whenItHappens: '빠른 주자가 다음 베이스를 노릴 때',
     funFact: '역대 최다 도루왕은 리키 헨더슨(1,406도루)입니다.'
   },
@@ -263,7 +264,7 @@ export const fieldingSituations: GameSituation[] = [
   },
   {
     id: 'passedball',
-    name: '포일 (패스트볼)',
+    name: '포일',
     description: '포수가 잡을 수 있는 공을 놓쳐 주자가 진루하는 것',
     detailedExplanation: '투수가 적절히 던졌지만 포수가 공을 놓치거나 뒤로 빠뜨려 주자가 진루하는 것입니다.',
     whenItHappens: '포수가 공을 놓칠 때',
@@ -363,7 +364,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '지명타자 (DH)',
     category: 'batting',
     shortDescription: '투수 대신 타격만 하는 선수',
-    fullDescription: '투수 대신 타순에 들어가 타격만 전담하는 선수입니다. 수비는 하지 않습니다. 아메리칸 리그와 KBO에서 사용합니다.111',
+    fullDescription: '투수 대신 타순에 들어가 타격만 전담하는 선수입니다. 수비는 하지 않습니다.',
     relatedTerms: ['타순', '투수']
   },
   {
@@ -379,7 +380,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '끝내기',
     category: 'batting',
     shortDescription: '마지막 공격에서 결승점을 내는 것',
-    fullDescription: '홈팀이 마지막 공격(9회말 또는 연장)에서 역전하거나 동점에서 승리를 결정짓는 플레이입니다.',
+    fullDescription: '마지막 공격(9회말 또는 연장)에서 역전하거나 동점에서 승리를 결정짓는 플레이입니다.',
     example: '9회말 끝내기 홈런으로 역전승',
     relatedTerms: ['결승타', '역전']
   },
@@ -659,7 +660,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '볼 카운트',
     category: 'game',
     shortDescription: '현재 볼과 스트라이크 수',
-    fullDescription: '한 타석에서 누적된 볼과 스트라이크 수입니다. B-S 또는 볼-스트라이크 순서로 표시합니다.',
+    fullDescription: '한 타석에서 누적된 볼과 스트라이크 수입니다. 볼-스트라이크 순서로 표시합니다.',
     example: '2-1 카운트 = 볼 2개, 스트라이크 1개',
     relatedTerms: ['풀카운트']
   },
@@ -668,7 +669,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '풀카운트',
     category: 'game',
     shortDescription: '3볼 2스트라이크 상황',
-    fullDescription: '볼 3개, 스트라이크 2개인 상황입니다. 다음 공에 따라 볼넷 또는 삼진이 결정되는 긴장되는 순간입니다.',
+    fullDescription: '볼 3개, 스트라이크 2개인 상황입니다. 타자가 다음 공을 지켜볼 시 볼넷 또는 삼진이 결정되는 긴장되는 순간입니다.',
     relatedTerms: ['볼 카운트']
   },
   {
@@ -676,7 +677,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '타석 / 타수',
     category: 'game',
     shortDescription: '타석은 타격 기회, 타수는 타율 계산용 타석',
-    fullDescription: '타석은 타자가 타격하러 들어간 모든 기회입니다. 타수는 볼넷, 사구, 희생타 등을 제외한 공식 타격 횟수입니다.',
+    fullDescription: '타석은 타자가 타격하러 들어간 모든 기회입니다. 타수는 볼넷, 사구, 희생타 등을 제외한 타자가 공을 직접 친 횟수입니다.',
     relatedTerms: ['타율']
   },
   {
