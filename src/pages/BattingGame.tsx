@@ -364,15 +364,16 @@ const BattingGame = () => {
     const isStrike = Math.random() < 0.7;
     setPitchLocation(isStrike ? 'strike' : 'ball');
     
-    // Allow swing after delay based on pitch type
-    const pitchSpeed = selectedPitch === 'fastball' ? 400 : 
-                       selectedPitch === 'changeup' ? 700 : 550;
+    // Slower pitch speeds for better visibility (was 400-700, now 800-1400)
+    const pitchSpeed = selectedPitch === 'fastball' ? 800 : 
+                       selectedPitch === 'changeup' ? 1400 : 1100;
     
+    // Allow swing after the ball travels a bit
     setTimeout(() => {
       setCanSwing(true);
-    }, pitchSpeed);
+    }, pitchSpeed * 0.4);
     
-    // Auto-resolve if no swing after timeout
+    // Auto-resolve if no swing after timeout - give more time to react
     setTimeout(() => {
       setCanSwing(false);
       setIsPitching(false);
@@ -415,7 +416,7 @@ const BattingGame = () => {
       
       setPitchType(null);
       setPitchLocation(null);
-    }, pitchSpeed + 600);
+    }, pitchSpeed + 400);
   }, [isPitching, gameState, addOut, handleStrikeout, handleWalk]);
 
   const handleSwing = useCallback((bunt: boolean = false) => {
@@ -515,7 +516,12 @@ const BattingGame = () => {
 
               {/* Ball Animation */}
               {isPitching && (
-                <div className={`absolute text-4xl animate-pitch ${pitchLocation === 'strike' ? 'bottom-32' : 'bottom-40 left-1/3'}`}>
+                <div 
+                  className={`absolute text-5xl z-10 ${pitchLocation === 'strike' ? 'animate-pitch-strike' : 'animate-pitch-ball'}`}
+                  style={{ 
+                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))',
+                  }}
+                >
                   ⚾
                 </div>
               )}
