@@ -363,7 +363,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '지명타자 (DH)',
     category: 'batting',
     shortDescription: '투수 대신 타격만 하는 선수',
-    fullDescription: '투수 대신 타순에 들어가 타격만 전담하는 선수입니다. 수비는 하지 않습니다. 아메리칸 리그와 KBO에서 사용합니다.',
+    fullDescription: '투수 대신 타순에 들어가 타격만 전담하는 선수입니다. 수비는 하지 않습니다. 아메리칸 리그와 KBO에서 사용합니다.111',
     relatedTerms: ['타순', '투수']
   },
   {
