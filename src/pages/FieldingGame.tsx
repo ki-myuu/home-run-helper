@@ -102,14 +102,15 @@ const FieldingGame = () => {
     const targetX = 20 + Math.random() * 60; // 20-80% of width
     const targetY = type === 'fly' ? 50 + Math.random() * 30 : 70 + Math.random() * 20;
     
+    // Slower speeds for better playability (was 2-4, now 0.6-1.2)
     const newBall: Ball = {
       id: Date.now(),
       x: 50,
-      y: 10,
+      y: 5,
       targetX,
       targetY,
       type,
-      speed: type === 'ground' ? 3 : type === 'line' ? 4 : 2,
+      speed: type === 'ground' ? 0.8 : type === 'line' ? 1.2 : 0.6,
     };
 
     setBalls(prev => [...prev, newBall]);
@@ -405,12 +406,14 @@ const FieldingGame = () => {
               {balls.map(ball => (
                 <div
                   key={ball.id}
-                  className="absolute text-2xl transition-all duration-100 pointer-events-none"
+                  className="absolute pointer-events-none"
                   style={{ 
                     left: `${ball.x}%`, 
                     top: `${ball.y}%`,
                     transform: 'translate(-50%, -50%)',
-                    filter: ball.type === 'fly' ? 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' : 'none'
+                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))',
+                    fontSize: ball.type === 'fly' ? '2.5rem' : '2rem',
+                    transition: 'font-size 0.3s ease',
                   }}
                 >
                   ⚾
