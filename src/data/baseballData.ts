@@ -178,16 +178,17 @@ export const fieldingSituations: GameSituation[] = [
   {
     id: 'flyout_catch',
     name: '플라이볼 캐치',
-    description: '뜬공을 잡아 타자를 아웃시키는 것',
+    description: '뜬공(타자가 친 다음 땅에 닿은 적이 없는 공)을 잡아 타자를 아웃시키는 것',
     detailedExplanation: '타자가 친 공이 땅에 떨어지기 전에 수비수가 잡으면 타자는 바로 아웃됩니다. 외야수든 내야수든 상관없습니다.',
     whenItHappens: '뜬공이 글러브에 들어갈 때',
   },
   {
     id: 'groundball',
     name: '땅볼 처리',
-    description: '땅볼을 잡아 1루로 송구하여 타자를 아웃시키는 것',
+    description: '땅볼(타자가 친 다음 땅에 닿은 적인 있는 공)을 잡아 1루로 송구하여 타자를 아웃시키는 것',
     detailedExplanation: '내야수가 땅볼을 잡아 1루수에게 던지고, 타자가 1루에 도착하기 전에 1루수가 공을 잡고 베이스를 밟으면 아웃입니다.',
     whenItHappens: '내야 땅볼을 잡고 1루에 송구할 때',
+    funFact: '타자가 상당히 느리고 외야수의 송구 능력이 굉장히 좋으면 간혹 외야수가 타자를 땅볼 아웃 시키기도 합니다.'
   },
   {
     id: 'forceout',
@@ -195,7 +196,7 @@ export const fieldingSituations: GameSituation[] = [
     description: '주자가 반드시 진루해야 할 때 베이스를 먼저 밟아 아웃시키는 것',
     detailedExplanation: '뒤에서 주자가 오고 있어 앞 주자가 반드시 다음 베이스로 가야 하는 상황에서, 수비수가 공을 가지고 베이스를 밟으면 아웃입니다. 주자를 태그할 필요가 없습니다.',
     whenItHappens: '주자가 반드시 진루해야 하는 상황(포스 상황)',
-    funFact: '병살이 가능한 것은 포스 아웃 규칙 덕분입니다.'
+    funFact: '병살이 가능한 것은 포스 아웃 규칙 덕분입니다. 예를 들어 1사 1루에 주자가 있고 공을 치면 1루 주자는 2루에 가야하기 때문에 2루에서 포스 아웃 상황이 나오죠.'
   },
   {
     id: 'tagout',
@@ -210,7 +211,7 @@ export const fieldingSituations: GameSituation[] = [
     name: '태그업',
     description: '플라이볼이 잡힌 후 베이스를 밟고 다음 베이스로 진루하는 것',
     detailedExplanation: '뜬공이 잡히면 주자는 원래 베이스로 돌아가거나, 공이 잡힌 순간 베이스를 밟고 있다가 다음 베이스로 뛸 수 있습니다. 이것이 태그업입니다.',
-    whenItHappens: '외야 플라이볼이 잡힌 후',
+    whenItHappens: '플라이볼이 잡힌 후',
     funFact: '태그업을 제때 하면 아웃 상황에서도 득점이 가능합니다!'
   },
   {
@@ -499,11 +500,18 @@ export const baseballTerms: BaseballTerm[] = [
     relatedTerms: ['ERA']
   },
   {
+    id: 'win',
+    term: '승리',
+    category: 'pitching',
+    shortDescription: '투수가 "승리"기록으로 인정되는 것',
+    fullDescription: '해당 투수가 등판하고 있을 때 리드 중이고 게임 종료 시까지 단 한 번도 리드가 깨지지 않을 시 그 투수의 승리로 기록됩니다.'
+  },
+  {
     id: 'save',
     term: '세이브',
     category: 'pitching',
     shortDescription: '마무리 투수가 리드를 지켜 승리에 기여하는 것',
-    fullDescription: '3점 이내의 리드 상황에서 경기를 마무리하거나, 동점주를 베이스에 두고 마무리하면 세이브가 기록됩니다.',
+    fullDescription: '3점 이내의 리드 상황에서 경기를 마무리하거나, 리드를 뒤집을 만큼의 주자를 베이스에 두고 마무리하면 세이브가 기록됩니다.',
     relatedTerms: ['홀드', '블론세이브']
   },
   {
@@ -511,7 +519,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '홀드',
     category: 'pitching',
     shortDescription: '중간계투가 리드를 지키면 기록되는 것',
-    fullDescription: '리드 상황에서 등판해 리드를 유지한 채 다음 투수에게 넘기면 홀드가 기록됩니다.',
+    fullDescription: '리드 상황에서 등판해 리드를 유지한 채 다음 투수에게 넘기면 홀드가 기록됩니다.(단, 이때 홀드 조건이 성립되더라도 기록원이 보았을 때 투구 내용이 미흡하다면 홀드로 인정되지 않습니다.)',
     relatedTerms: ['세이브', '중계투수']
   },
   {
