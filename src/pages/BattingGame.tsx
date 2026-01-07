@@ -466,6 +466,9 @@ const BattingGame = () => {
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Block keyboard controls when modal is open
+      if (isModalOpen) return;
+      
       if (e.code === 'Space' && !isPitching && !gameState.isGameOver) {
         e.preventDefault();
         startPitch();
@@ -480,7 +483,7 @@ const BattingGame = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPitching, canSwing, gameState.isGameOver, startPitch, handleSwing]);
+  }, [isPitching, canSwing, gameState.isGameOver, isModalOpen, startPitch, handleSwing]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted py-8">
