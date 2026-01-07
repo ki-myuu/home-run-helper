@@ -44,6 +44,7 @@ const BattingGame = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [canSwing, setCanSwing] = useState(false);
   const [isBunting, setIsBunting] = useState(false);
+  const [pitchTimeoutId, setPitchTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const getSituation = (id: string): GameSituation | undefined => {
     return battingSituations.find(s => s.id === id);
@@ -374,11 +375,12 @@ const BattingGame = () => {
     }, pitchSpeed * 0.4);
     
     // Auto-resolve if no swing after timeout - give more time to react
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setCanSwing(false);
       setIsPitching(false);
+      setPitchTimeoutId(null);
       
-      // If didn't swing
+      // If didn't swing - only then do ball/strike judgment
       if (isStrike) {
         setGameState(prev => {
           const newStrikes = prev.strikes + 1;
@@ -417,10 +419,18 @@ const BattingGame = () => {
       setPitchType(null);
       setPitchLocation(null);
     }, pitchSpeed + 400);
+    
+    setPitchTimeoutId(timeoutId);
   }, [isPitching, gameState, addOut, handleStrikeout, handleWalk]);
 
   const handleSwing = useCallback((bunt: boolean = false) => {
     if (!canSwing || !isPitching) return;
+    
+    // Cancel the auto-resolve timeout so ball/strike judgment doesn't happen
+    if (pitchTimeoutId) {
+      clearTimeout(pitchTimeoutId);
+      setPitchTimeoutId(null);
+    }
     
     setCanSwing(false);
     setIsPitching(false);
