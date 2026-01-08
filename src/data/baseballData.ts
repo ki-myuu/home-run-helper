@@ -28,6 +28,7 @@ export const battingSituations: GameSituation[] = [
     description: '타자가 공을 치고 1루까지 안전하게 도달하는 것',
     detailedExplanation: '안타는 타자가 투수의 공을 배트로 쳐서 페어 지역에 떨어뜨리고, 수비수가 아웃시키기 전에 1루에 도달하는 것입니다. 야구에서 가장 기본적인 공격 성공입니다.',
     whenItHappens: '공이 내야수 사이를 통과하거나, 외야에 떨어졌을 때',
+    relatedTerms: ['페어 / 파울'],
     funFact: '한 시즌 최다 안타 기록은 이치로 스즈키의 262개(2004년)입니다.'
   },
   {
@@ -52,6 +53,7 @@ export const battingSituations: GameSituation[] = [
     description: '타자가 공을 담장 밖으로 쳐서 모든 베이스를 돌아 득점하는 것',
     detailedExplanation: '타자가 친 공이 페어 지역의 외야 펜스를 넘어가면 홈런입니다. 타자와 베이스에 있는 모든 주자가 홈으로 들어와 득점합니다.',
     whenItHappens: '공이 외야 펜스를 넘어갈 때',
+    relatedTerms: ['페어 / 파울'],
     funFact: '만루홈런(그랜드슬램)은 한 번에 4점을 득점할 수 있습니다!'
   },
   {
@@ -169,7 +171,8 @@ export const battingSituations: GameSituation[] = [
     name: '삼중살 (트리플플레이)',
     description: '한 번의 타격으로 3명이 아웃되는 것',
     detailedExplanation: '한 번의 플레이에서 3명의 주자(타자 포함)가 모두 아웃되는 매우 드문 상황입니다. 야구에서 가장 희귀한 플레이 중 하나입니다.',
-    whenItHappens: '주자가 2명 이상일 때 특수한 상황에서, 예를 들어 무사 1/2루에서 공이 잘 맞은 줄 알고 1/2루 주자가 뛰었지만 3루수 라인드라이브(당황해서 귀루 못함)>2루 포스아웃>1루 포스아웃 이 되면 삼중살이 성립합니다.',
+    whenItHappens: '주자가 2명 이상일 때',
+    example: '무사 1/2루에서 공이 잘 맞은 줄 알고 1/2루 주자가 뛰었지만 3루수 라인드라이브(당황해서 귀루 못함)>2루 포스아웃>1루 포스아웃',
     funFact: 'MLB 역사상 삼중살은 약 700번밖에 발생하지 않았습니다!',
     relatedTerms: ['삼중상']
   },
@@ -198,7 +201,8 @@ export const fieldingSituations: GameSituation[] = [
     description: '주자가 반드시 진루해야 할 때 베이스를 먼저 밟아 아웃시키는 것',
     detailedExplanation: '뒤에서 주자가 오고 있어 앞 주자가 반드시 다음 베이스로 가야 하는 상황에서, 수비수가 공을 가지고 베이스를 밟으면 아웃입니다. 주자를 태그할 필요가 없습니다.',
     whenItHappens: '주자가 반드시 진루해야 하는 상황(포스 상황)',
-    funFact: '병살이 가능한 것은 포스 아웃 규칙 덕분입니다. 예를 들어 1사 1루에 주자가 있고 공을 치면 1루 주자는 2루에 가야하기 때문에 2루에서 포스 아웃 상황이 나오죠.'
+    example: '1사 1루에 주자가 있고 타자주자(공을 방금 친 사람)은 1루로 가야하고 1루 주자는 2루에 가야할 때',
+    funFact: '병살이 가능한 것은 포스 아웃 규칙 덕분입니다.'
   },
   {
     id: 'tagout',
@@ -329,7 +333,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '장타율',
     category: 'batting',
     shortDescription: '타수당 평균 루타 수',
-    fullDescription: '타자의 장타 능력을 나타냅니다. 장타율 = 총루타 ÷ 타수. 1루타=1, 2루타=2, 3루타=3, 홈런=4로 계산합니다.',
+    fullDescription: '타자의 장타 능력을 나타냅니다. 장타율 = 총루타 ÷ 타수. 이때 루타의 수는 1루타=1, 2루타=2, 3루타=3, 홈런=4로 계산합니다.',
     example: '홈런만 10개 친 40타수: 장타율 = 40÷40 = 1.000',
     relatedTerms: ['타율', 'OPS']
   },
@@ -371,15 +375,15 @@ export const baseballTerms: BaseballTerm[] = [
     id: 'dh',
     term: '지명타자 (DH)',
     category: 'batting',
-    shortDescription: '투수 대신 타격만 하는 선수',
-    fullDescription: '투수 대신 타순에 들어가 타격만 전담하는 선수입니다. 수비는 하지 않습니다.',
+    shortDescription: '타격만 하는 선수',
+    fullDescription: '타순에 들어가 타격만 전담하는 선수입니다. 수비는 하지 않습니다.',
     relatedTerms: ['타순', '투수']
   },
   {
     id: 'clutch_hit',
     term: '적시타',
     category: 'batting',
-    shortDescription: '주자를 홈으로 불러들이는 안타',
+    shortDescription: '주자를 홈으로 불러들이는 안타, "적"절한 때="시"에 나타나는 안"타"',
     fullDescription: '베이스에 있는 주자를 홈으로 불러들여 득점시키는 안타입니다. 중요한 순간의 적시타는 게임의 흐름을 바꿉니다.',
     relatedTerms: ['타점', '결승타']
   },
