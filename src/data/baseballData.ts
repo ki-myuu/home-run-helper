@@ -121,9 +121,10 @@ export const battingSituations: GameSituation[] = [
     id: 'intentionalwalk',
     name: '고의사구 (고의 볼넷)',
     description: '투수가 의도적으로 4볼을 던져 타자를 1루로 보내는 것',
-    detailedExplanation: '강타자를 상대하기 어렵거나 전략적으로 유리할 때, 감독이 투수에게 고의로 볼넷을 주도록 지시합니다. 현재는 투구 없이 심판에게 신호만 보내면 됩니다.',
-    whenItHappens: '강타자를 피하거나 병살 상황을 만들 때',
-    funFact: '2017년부터 MLB에서는 투구 없이 신호만으로 고의사구가 가능합니다.'
+    detailedExplanation: '강타자를 상대하기 어렵거나 전략적으로 유리할 때, 감독이 투수에게 고의로 볼넷을 주도록 지시합니다. 현재는 투구 없이 심판에게 신호만 보내면 됩니다. 현재 룰을 "자동 고의사구"라고 명명합니다.',
+    whenItHappens: '강타자를 피하거나 병살 상황(ex: 1사 2루와 3루에서 고의사구)을 만들 때',
+    funFact: '2017년부터 MLB에서는 투구 없이 신호만으로 고의사구가 가능합니다.',
+    relatedTerms: ['병살타 (더블플레이)']
   },
   {
     id: 'infieldfly',
@@ -135,18 +136,18 @@ export const battingSituations: GameSituation[] = [
   },
   {
     id: 'sacrifice',
-    name: '희생 플라이 / 희생 번트',
+    name: '희생타',
     description: '자신은 아웃되지만 주자를 진루시키는 타격',
-    detailedExplanation: '희생 플라이는 외야 뜬공으로 아웃되면서 3루 주자가 홈으로 들어오는 것, 희생 번트는 번트로 아웃되면서 주자를 다음 베이스로 보내는 것입니다.',
+    detailedExplanation: '희생타는 공을 쳐서 아웃됐지만 그 사이 주자가 다음 베이스로 가는 타격을 칭합니다.',
     whenItHappens: '주자를 진루시키거나 득점시키기 위해',
-    funFact: '희생 플라이와 희생 번트는 타수에 포함되지 않아 타율에 영향을 주지 않습니다.'
+    funFact: '희생타는 타수에 포함되지 않아 타율에 영향을 주지 않습니다. 주자로 다음 베이스로 보내는 팀플레이를 했는데 타율이 낮아지면 억울하잖아요?'
   },
   {
     id: 'groundout',
     name: '땅볼 아웃',
     description: '땅볼을 친 후 1루에서 아웃되는 것',
-    detailedExplanation: '타자가 친 공이 땅에 튀어 내야수가 잡아 1루로 송구하면, 타자가 1루에 도착하기 전에 공이 먼저 도착하면 아웃입니다.',
-    whenItHappens: '땅볼을 치고 1루에서 먼저 터치될 때',
+    detailedExplanation: '타자가 친 공이 땅에 튀어 내야수가 잡아 1루로 송구하고 타자가 1루에 도착하기 전에 공이 먼저 도착하면 아웃입니다.',
+    whenItHappens: '타자가 땅에 닿는 공을 쳤을 때',
   },
   {
     id: 'flyout',
@@ -168,8 +169,9 @@ export const battingSituations: GameSituation[] = [
     name: '삼중살 (트리플플레이)',
     description: '한 번의 타격으로 3명이 아웃되는 것',
     detailedExplanation: '한 번의 플레이에서 3명의 주자(타자 포함)가 모두 아웃되는 매우 드문 상황입니다. 야구에서 가장 희귀한 플레이 중 하나입니다.',
-    whenItHappens: '주자가 2명 이상일 때 특수한 상황에서',
-    funFact: 'MLB 역사상 삼중살은 약 700번밖에 발생하지 않았습니다!'
+    whenItHappens: '주자가 2명 이상일 때 특수한 상황에서, 예를 들어 무사 1/2루에서 공이 잘 맞은 줄 알고 1/2루 주자가 뛰었지만 3루수 라인드라이브(당황해서 귀루 못함)>2루 포스아웃>1루 포스아웃 이 되면 삼중살이 성립합니다.',
+    funFact: 'MLB 역사상 삼중살은 약 700번밖에 발생하지 않았습니다!',
+    relatedTerms: ['삼중상']
   },
 ];
 
@@ -244,6 +246,13 @@ export const fieldingSituations: GameSituation[] = [
     detailedExplanation: '주자가 도루를 시도했지만, 포수가 빠르게 베이스로 송구하여 주자가 도착하기 전에 태그 아웃되는 것입니다.',
     whenItHappens: '포수의 송구가 도루 시도 주자보다 빠를 때',
     funFact: '포수의 송구 능력(팝타임)이 도루 저지의 핵심입니다.'
+  },
+  {
+    id: 'base_return',
+    name: '귀루',
+    description: '주자가 원래 있던 베이스로 돌아가는 것',
+    detailedExplanation: '주자가 다음 베이스로 가려다가 다시 원래 있던 베이스(루)로 복"귀"하는 것입니다.',
+    whenItHappens: '타구가 잘 맞은 줄 알고 다시 원래 베이스로 복귀할 때',
   },
   {
     id: 'error',
@@ -535,7 +544,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '완투',
     category: 'pitching',
     shortDescription: '선발 투수가 경기를 혼자 끝내는 것',
-    fullDescription: '선발 투수가 교체 없이 경기를 처음부터 끝까지 혼자 던지는 것입니다.',
+    fullDescription: '선발 투수가 교체 없이 경기를 처음부터 끝까지 혼자 던지는 것입니다. 완봉과의 차이는 점수를 내줘도 끝까지 던질 시 완(전)투(구)로 취급됩니다. ',
     relatedTerms: ['완봉', '선발투수']
   },
   {
@@ -551,7 +560,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '노히트노런',
     category: 'pitching',
     shortDescription: '한 경기에서 안타를 하나도 맞지 않는 것',
-    fullDescription: '투수(들)가 9이닝 동안 상대팀에게 안타를 하나도 허용하지 않는 것입니다. 볼넷이나 에러로 출루는 가능합니다.',
+    fullDescription: '투수(들)가 9이닝 동안 상대팀에게 안타나 점수를 하나도 허용하지 않는 것입니다. 볼넷이나 에러로 출루는 가능합니다.',
     relatedTerms: ['퍼펙트게임', '완봉']
   },
   {
@@ -559,7 +568,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '퍼펙트게임',
     category: 'pitching',
     shortDescription: '단 한 명의 타자도 출루시키지 않는 경기',
-    fullDescription: '27명의 타자를 모두 아웃시켜 단 한 명도 출루시키지 않는 것입니다. 야구에서 가장 어려운 기록입니다.',
+    fullDescription: '27명의 타자를 모두 아웃시켜 실책을 포함하여 단 한 명도 출루시키지 않는 것입니다. 야구에서 가장 어려운 기록입니다.',
     funFact: 'MLB 역사상 퍼펙트게임은 23번밖에 없습니다!',
     relatedTerms: ['노히트노런']
   },
@@ -576,7 +585,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '커브',
     category: 'pitching',
     shortDescription: '크게 휘어지는 변화구',
-    fullDescription: '위에서 아래로 크게 떨어지는 변화구입니다. 타자의 타이밍을 빼앗는 데 효과적입니다.',
+    fullDescription: '위에서 아래로 크게 떨어지는 변화구입니다. 직구 등을 예상하던던 타자의 타이밍을 빼앗는 데 효과적입니다.',
     relatedTerms: ['슬라이더', '변화구']
   },
   {
@@ -600,8 +609,8 @@ export const baseballTerms: BaseballTerm[] = [
     term: '선발투수',
     category: 'pitching',
     shortDescription: '경기를 시작하는 투수',
-    fullDescription: '경기 처음부터 마운드에 오르는 투수입니다. 보통 5~7이닝을 던지는 것을 목표로 합니다.',
-    relatedTerms: ['중계투수', '마무리투수']
+    fullDescription: '경기 처음부터 마운드에 오르는 투수입니다. 보통 5~7이닝을 던지는 것을 목표로 합니다. 선발 투수는 5이닝 이상을 던져야지 "승리" 기록을 얻을 수 있습니다.',
+    relatedTerms: ['중계투수', '마무리투수', '승리']
   },
   {
     id: 'reliever',
@@ -635,7 +644,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '초 / 말',
     category: 'game',
     shortDescription: '이닝의 전반(초)과 후반(말)',
-    fullDescription: '초는 원정팀이 공격하는 이닝의 전반, 말은 홈팀이 공격하는 이닝의 후반입니다.',
+    fullDescription: '초는 원정팀이 공격하는 이닝의 초반부, 말은 홈팀이 공격하는 이닝의 후반부입니다.',
     relatedTerms: ['이닝']
   },
   {
@@ -643,7 +652,7 @@ export const baseballTerms: BaseballTerm[] = [
     term: '연장전',
     category: 'game',
     shortDescription: '9회까지 동점일 때 추가로 진행되는 이닝',
-    fullDescription: '9회가 끝났을 때 동점이면 승부가 날 때까지 추가 이닝을 진행합니다.',
+    fullDescription: '9회가 끝났을 때 동점이면 승부가 날 때까지 추가 이닝을 진행합니다. KBO에서는 최대 11회까지 진행합니다.',
     relatedTerms: ['이닝']
   },
   {
@@ -677,7 +686,68 @@ export const baseballTerms: BaseballTerm[] = [
     category: 'game',
     shortDescription: '타석은 타격 기회, 타수는 타율 계산용 타석',
     fullDescription: '타석은 타자가 타격하러 들어간 모든 기회입니다. 타수는 볼넷, 사구, 희생타 등을 제외한 타자가 공을 직접 친 횟수입니다.',
-    relatedTerms: ['타율']
+    relatedTerms: ['타율'],
+    funFact: '실책은 타수에는 포함되여 타자의 타율이 낮아집니다. 정상적인 수비였으면 },
+  
+  // 경기 용어
+  {
+    id: 'inning',
+    term: '이닝',
+    category: 'game',
+    shortDescription: '공격과 수비가 한 번씩 교대하는 단위',
+    fullDescription: '원정팀이 공격하는 "초"와 홈팀이 공격하는 "말"로 구성됩니다. 정규 경기는 9이닝입니다.',
+    example: '1회초 = 1이닝 초반, 원정팀 공격',
+    relatedTerms: ['초', '말']
+  },
+  {
+    id: 'top_bottom',
+    term: '초 / 말',
+    category: 'game',
+    shortDescription: '이닝의 전반(초)과 후반(말)',
+    fullDescription: '초는 원정팀이 공격하는 이닝의 초반부, 말은 홈팀이 공격하는 이닝의 후반부입니다.',
+    relatedTerms: ['이닝']
+  },
+  {
+    id: 'extra_innings',
+    term: '연장전',
+    category: 'game',
+    shortDescription: '9회까지 동점일 때 추가로 진행되는 이닝',
+    fullDescription: '9회가 끝났을 때 동점이면 승부가 날 때까지 추가 이닝을 진행합니다. KBO에서는 최대 11회까지 진행합니다.',
+    relatedTerms: ['이닝']
+  },
+  {
+    id: 'strike_zone',
+    term: '스트라이크 존',
+    category: 'game',
+    shortDescription: '스트라이크가 선언되는 구역',
+    fullDescription: '홈플레이트 위쪽, 타자의 무릎과 가슴 사이 높이의 공간입니다. 이 구역을 통과하면 스트라이크입니다.',
+    relatedTerms: ['스트라이크', '볼']
+  },
+  {
+    id: 'count',
+    term: '볼 카운트',
+    category: 'game',
+    shortDescription: '현재 볼과 스트라이크 수',
+    fullDescription: '한 타석에서 누적된 볼과 스트라이크 수입니다. 볼-스트라이크 순서로 표시합니다.',
+    example: '2-1 카운트 = 볼 2개, 스트라이크 1개',
+    relatedTerms: ['풀카운트']
+  },
+  {
+    id: 'fullcount',
+    term: '풀카운트',
+    category: 'game',
+    shortDescription: '3볼 2스트라이크 상황',
+    fullDescription: '볼 3개, 스트라이크 2개인 상황입니다. 타자가 다음 공을 지켜볼 시 볼넷 또는 삼진이 결정되는 긴장되는 순간입니다.',
+    relatedTerms: ['볼 카운트']
+  },
+  {
+    id: 'at_bat',
+    term: '타석 / 타수',
+    category: 'game',
+    shortDescription: '타석은 타격 기회, 타수는 타율 계산용 타석',
+    fullDescription: '타석은 타자가 타격하러 들어간 모든 기회입니다. 타수는 볼넷, 사구, 희생타 등을 제외한 타자가 공을 직접 친 횟수입니다.',
+    relatedTerms: ['타율'],
+    funFact: '실책은 타수에는 포함되여 타자의 타율이 낮아집니다. 정상적인 수비였으면 아웃인데, 출루 한 것으로 기록되면 안되잖아요?'
   },
   {
     id: 'run',
