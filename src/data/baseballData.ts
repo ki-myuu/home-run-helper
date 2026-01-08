@@ -131,8 +131,7 @@ export const battingSituations: GameSituation[] = [
     description: '특정 상황에서 내야 뜬공이 잡히지 않아도 자동 아웃',
     detailedExplanation: '주자가 1, 2루 또는 만루이고 아웃 카운트가 0 또는 1아웃일 때, 내야에 뜬공이 오르면 심판이 인필드 플라이를 선언합니다. 이 경우 공이 잡히든 안 잡히든 타자는 자동 아웃입니다.',
     whenItHappens: '0-1아웃, 1·2루 또는 만루에서 내야 뜬공',
-    funFact: '수비수가 일부러 공을 떨어뜨려 병살을 노리는 것을 방지하는 규칙입니다.',
-    relatedTerms: ['병살타']
+    funFact: '수비수가 일부러 공을 떨어뜨려 병살을 노리는 것을 방지하는 규칙입니다.'
   },
   {
     id: 'sacrifice',
@@ -234,7 +233,7 @@ export const fieldingSituations: GameSituation[] = [
     id: 'stolen_base',
     name: '도루',
     description: '투수가 홈으로 던지는 동안 주자가 다음 베이스로 달려가는 것',
-    id: 'stolen_base',n: '주자가 투수의 투구 동작을 보고 빠르게 다음 베이스로 달려가 안전하게 도착하면 도루 성공입니다.',
+    detailedExplanation: '주자가 투수의 투구 동작을 보고 빠르게 다음 베이스로 달려가 안전하게 도착하면 도루 성공입니다.',
     whenItHappens: '빠른 주자가 다음 베이스를 노릴 때',
     funFact: '역대 최다 도루왕은 리키 헨더슨(1,406도루)입니다.'
   },

@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { AdBanner } from '@/components/ads/AdBanner';
 
 const categoryLabels: Record<BaseballTerm['category'], string> = {
   batting: '타격',
@@ -100,6 +101,11 @@ const Dictionary = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Ad Banner */}
+        <div className="mb-6">
+          <AdBanner slot="3333333333" format="horizontal" className="mx-auto" />
+        </div>
 
         {/* Category Tabs */}
         <Tabs value={activeCategory} onValueChange={(v) => setActiveCategory(v as typeof activeCategory)} className="mb-6">
@@ -187,6 +193,11 @@ const Dictionary = () => {
               </Button>
             ))}
           </div>
+        </div>
+
+        {/* Ad Banner at bottom */}
+        <div className="mt-8">
+          <AdBanner slot="4444444444" format="horizontal" className="mx-auto" />
         </div>
       </div>
 

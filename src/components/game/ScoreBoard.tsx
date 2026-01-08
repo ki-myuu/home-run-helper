@@ -51,7 +51,7 @@ export const ScoreBoard = ({
             <div>
               <span className="text-muted-foreground">B</span>
               <div className="flex gap-1 mt-1">
-                {[0, 1, 2, 3].map(i => (
+                {[0, 1, 2].map(i => (
                   <div 
                     key={i} 
                     className={`w-3 h-3 rounded-full ${i < balls ? 'bg-success' : 'bg-muted'}`} 
@@ -62,7 +62,7 @@ export const ScoreBoard = ({
             <div>
               <span className="text-muted-foreground">S</span>
               <div className="flex gap-1 mt-1">
-                {[0, 1, 2].map(i => (
+                {[0, 1].map(i => (
                   <div 
                     key={i} 
                     className={`w-3 h-3 rounded-full ${i < strikes ? 'bg-warning' : 'bg-muted'}`} 
@@ -73,7 +73,7 @@ export const ScoreBoard = ({
             <div>
               <span className="text-muted-foreground">O</span>
               <div className="flex gap-1 mt-1">
-                {[0, 1, 2].map(i => (
+                {[0, 1].map(i => (
                   <div 
                     key={i} 
                     className={`w-3 h-3 rounded-full ${i < outs ? 'bg-destructive' : 'bg-muted'}`} 

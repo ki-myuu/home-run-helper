@@ -6,6 +6,7 @@ import { ScoreBoard } from '@/components/game/ScoreBoard';
 import { RuleExplanationModal } from '@/components/game/RuleExplanationModal';
 import { battingSituations, GameSituation } from '@/data/baseballData';
 import { ArrowLeft, HelpCircle, RotateCcw } from 'lucide-react';
+import { AdBanner } from '@/components/ads/AdBanner';
 import { toast } from 'sonner';
 
 type PitchType = 'fastball' | 'curve' | 'slider' | 'changeup';
@@ -567,9 +568,12 @@ const BattingGame = () => {
                 <div className="absolute inset-0 bg-background/90 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-3xl font-bold text-foreground mb-4">경기 종료!</h2>
-                    <p className="text-xl text-muted-foreground mb-6">
+                    <p className="text-xl text-muted-foreground mb-4">
                       최종 점수: 원정 {gameState.score.away} - {gameState.score.home} 홈
                     </p>
+                    <div className="mb-4">
+                      <AdBanner slot="1111111111" format="rectangle" className="mx-auto" />
+                    </div>
                     <Button onClick={resetGame} size="lg">
                       다시 하기
                     </Button>
