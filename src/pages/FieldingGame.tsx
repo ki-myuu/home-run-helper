@@ -6,6 +6,7 @@ import { ScoreBoard } from '@/components/game/ScoreBoard';
 import { RuleExplanationModal } from '@/components/game/RuleExplanationModal';
 import { fieldingSituations, GameSituation } from '@/data/baseballData';
 import { ArrowLeft, HelpCircle, RotateCcw } from 'lucide-react';
+import { AdBanner } from '@/components/ads/AdBanner';
 import { toast } from 'sonner';
 
 interface Ball {
@@ -476,9 +477,12 @@ const FieldingGame = () => {
                     <p className="text-xl text-muted-foreground mb-2">
                       최종 점수: 원정 {gameState.score.away} - {gameState.score.home} 홈
                     </p>
-                    <p className="text-muted-foreground mb-6">
+                    <p className="text-muted-foreground mb-4">
                       캐치: {catchCount} | 미스: {missCount}
                     </p>
+                    <div className="mb-4">
+                      <AdBanner slot="2222222222" format="rectangle" className="mx-auto" />
+                    </div>
                     <Button onClick={resetGame} size="lg">
                       다시 하기
                     </Button>

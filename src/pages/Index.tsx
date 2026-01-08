@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { AdBanner } from '@/components/ads/AdBanner';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -116,6 +117,11 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Ad Banner */}
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
+        <AdBanner slot="1234567890" format="horizontal" className="mx-auto" />
+      </div>
+
       {/* Features Section */}
       <div className="bg-card py-16 border-t border-border">
         <div className="container mx-auto px-4">
@@ -152,6 +158,11 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Ad Banner before Footer */}
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
+        <AdBanner slot="0987654321" format="horizontal" className="mx-auto" />
       </div>
 
       {/* Footer */}
