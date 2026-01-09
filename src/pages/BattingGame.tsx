@@ -25,7 +25,7 @@ interface GameState {
 
 const initialGameState: GameState = {
   inning: 1,
-  isTop: true,
+  isTop: false,  // 홈팀으로 시작 (말 공격)
   outs: 0,
   balls: 0,
   strikes: 0,
@@ -88,6 +88,7 @@ const BattingGame = () => {
   const [canSwing, setCanSwing] = useState(false);
   const [isBunting, setIsBunting] = useState(false);
   const [pitchTimeoutId, setPitchTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [inningEndMessage, setInningEndMessage] = useState<string | null>(null);
 
   const getSituation = (id: string): GameSituation | undefined => {
     return battingSituations.find(s => s.id === id);
@@ -124,9 +125,8 @@ const BattingGame = () => {
       }
 
       if (runsScored > 0) {
-        score = isTop 
-          ? { ...score, away: score.away + runsScored }
-          : { ...score, home: score.home + runsScored };
+        // 홈팀 득점 (항상 홈팀으로 플레이)
+        score = { ...score, home: score.home + runsScored };
       }
 
       return { ...prev, runners, score };
@@ -137,22 +137,38 @@ const BattingGame = () => {
     setGameState(prev => {
       const newOuts = prev.outs + 1;
       if (newOuts >= 3) {
-        // Side retired
-        const newIsTop = !prev.isTop;
-        const newInning = newIsTop ? prev.inning : prev.inning + 1;
+        // 3아웃 - 이닝 종료
+        const nextInning = prev.inning + 1;
         
-        if (newInning > 3) {
+        if (nextInning > 3) {
           return { ...prev, isGameOver: true, outs: 3 };
         }
+        
+        // 이닝 종료 메시지 표시
+        setInningEndMessage(`${prev.inning}회 말 종료!`);
+        
+        // 상대팀(원정팀) 공격 시뮬레이션 - 랜덤 득점 (0~2점)
+        const awayRuns = Math.floor(Math.random() * 3);
+        
+        // 3초 후 메시지 제거하고 다음 이닝 시작
+        setTimeout(() => {
+          setInningEndMessage(null);
+          if (awayRuns > 0) {
+            toast.info(`${nextInning}회 초: 상대팀이 ${awayRuns}점을 득점했습니다!`);
+          } else {
+            toast.info(`${nextInning}회 초: 상대팀 무득점!`);
+          }
+        }, 2000);
         
         return {
           ...prev,
           outs: 0,
           balls: 0,
           strikes: 0,
-          isTop: newIsTop,
-          inning: newIsTop ? prev.inning : newInning,
+          isTop: false,  // 항상 말 공격 유지
+          inning: nextInning,
           runners: { first: false, second: false, third: false },
+          score: { ...prev.score, away: prev.score.away + awayRuns },
         };
       }
       return { ...prev, outs: newOuts, balls: 0, strikes: 0 };
@@ -171,14 +187,11 @@ const BattingGame = () => {
     showSituation('walk');
     
     setGameState(prev => {
-      let { runners, score, isTop } = prev;
+      let { runners, score } = prev;
       
-      // Push runners if bases are loaded
+      // Push runners if bases are loaded (홈팀 득점)
       if (runners.first && runners.second && runners.third) {
-        const runsScored = 1;
-        score = isTop 
-          ? { ...score, away: score.away + runsScored }
-          : { ...score, home: score.home + runsScored };
+        score = { ...score, home: score.home + 1 };
       } else {
         if (runners.second && runners.first) {
           runners = { ...runners, third: true };
@@ -252,9 +265,8 @@ const BattingGame = () => {
             (prev.runners.first ? 1 : 0) + 
             (prev.runners.second ? 1 : 0) + 
             (prev.runners.third ? 1 : 0);
-          const score = prev.isTop
-            ? { ...prev.score, away: prev.score.away + runsScored }
-            : { ...prev.score, home: prev.score.home + runsScored };
+          // 홈팀 득점
+          const score = { ...prev.score, home: prev.score.home + runsScored };
           return { 
             ...prev, 
             score, 
@@ -522,8 +534,8 @@ const BattingGame = () => {
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Block keyboard controls when modal is open
-      if (isModalOpen) return;
+      // Block keyboard controls when modal is open or inning is ending
+      if (isModalOpen || inningEndMessage) return;
       
       if (e.code === 'Space' && !isPitching && !gameState.isGameOver) {
         e.preventDefault();
@@ -539,7 +551,7 @@ const BattingGame = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPitching, canSwing, gameState.isGameOver, isModalOpen, startPitch, handleSwing]);
+  }, [isPitching, canSwing, gameState.isGameOver, isModalOpen, inningEndMessage, startPitch, handleSwing]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted py-8">
@@ -611,13 +623,30 @@ const BattingGame = () => {
                 </div>
               )}
 
+              {/* Inning End Message */}
+              {inningEndMessage && !gameState.isGameOver && (
+                <div className="absolute inset-0 bg-background/80 flex items-center justify-center z-20 animate-fade-in">
+                  <div className="text-center bg-card p-8 rounded-2xl shadow-2xl border-2 border-primary">
+                    <h2 className="text-3xl font-bold text-foreground mb-2">⚾ {inningEndMessage}</h2>
+                    <p className="text-lg text-muted-foreground">다음 이닝을 준비합니다...</p>
+                  </div>
+                </div>
+              )}
+
               {/* Game Over */}
               {gameState.isGameOver && (
-                <div className="absolute inset-0 bg-background/90 flex items-center justify-center">
+                <div className="absolute inset-0 bg-background/90 flex items-center justify-center z-20">
                   <div className="text-center">
                     <h2 className="text-3xl font-bold text-foreground mb-4">경기 종료!</h2>
-                    <p className="text-xl text-muted-foreground mb-4">
-                      최종 점수: 원정 {gameState.score.away} - {gameState.score.home} 홈
+                    <p className="text-xl text-muted-foreground mb-2">
+                      최종 점수
+                    </p>
+                    <p className="text-2xl font-bold mb-4">
+                      <span className="text-muted-foreground">원정</span> {gameState.score.away} - {gameState.score.home} <span className="text-primary">홈 (나)</span>
+                    </p>
+                    <p className="text-lg mb-4">
+                      {gameState.score.home > gameState.score.away ? '🎉 승리!' : 
+                       gameState.score.home < gameState.score.away ? '😢 패배...' : '🤝 무승부'}
                     </p>
                     <div className="mb-4">
                       <AdBanner slot="1111111111" format="rectangle" className="mx-auto" />
@@ -633,7 +662,7 @@ const BattingGame = () => {
             {/* Controls */}
             <div className="bg-card p-6 border-t border-border">
               <div className="flex flex-col items-center gap-4">
-                {!isPitching && !gameState.isGameOver && (
+                {!isPitching && !gameState.isGameOver && !inningEndMessage && (
                   <Button 
                     onClick={startPitch} 
                     size="lg" 
