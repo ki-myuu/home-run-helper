@@ -34,12 +34,54 @@ const initialGameState: GameState = {
   isGameOver: false,
 };
 
+// 공 궤적 타입 정의
+interface PitchTrajectory {
+  endTop: number;    // 도착 시 top 위치 (%)
+  endLeft: number;   // 도착 시 left 위치 (%)
+  endScale: number;  // 도착 시 스케일
+}
+
+// 스트라이크 궤적 생성 (스트라이크 존 안으로)
+const generateStrikeTrajectory = (): PitchTrajectory => {
+  // 스트라이크 존 내 다양한 위치 (좌우: 42~58%, 상하: 52~68%)
+  const zones = [
+    { endTop: 55, endLeft: 45, endScale: 1.25 },  // 왼쪽 위
+    { endTop: 55, endLeft: 55, endScale: 1.25 },  // 오른쪽 위
+    { endTop: 62, endLeft: 50, endScale: 1.30 },  // 정중앙
+    { endTop: 65, endLeft: 45, endScale: 1.30 },  // 왼쪽 아래
+    { endTop: 65, endLeft: 55, endScale: 1.30 },  // 오른쪽 아래
+    { endTop: 58, endLeft: 48, endScale: 1.28 },  // 약간 왼쪽
+    { endTop: 58, endLeft: 52, endScale: 1.28 },  // 약간 오른쪽
+    { endTop: 68, endLeft: 50, endScale: 1.32 },  // 낮은 정중앙
+  ];
+  return zones[Math.floor(Math.random() * zones.length)];
+};
+
+// 볼 궤적 생성 (스트라이크 존 밖으로)
+const generateBallTrajectory = (): PitchTrajectory => {
+  // 스트라이크 존 밖 다양한 위치
+  const zones = [
+    { endTop: 72, endLeft: 35, endScale: 1.15 },  // 낮고 왼쪽 (8시)
+    { endTop: 72, endLeft: 65, endScale: 1.15 },  // 낮고 오른쪽 (4시)
+    { endTop: 75, endLeft: 50, endScale: 1.20 },  // 아주 낮음 (6시)
+    { endTop: 45, endLeft: 50, endScale: 1.35 },  // 높은 공 (12시)
+    { endTop: 60, endLeft: 32, endScale: 1.10 },  // 바깥 왼쪽 (9시)
+    { endTop: 60, endLeft: 68, endScale: 1.10 },  // 바깥 오른쪽 (3시)
+    { endTop: 48, endLeft: 38, endScale: 1.25 },  // 높고 왼쪽 (10시)
+    { endTop: 48, endLeft: 62, endScale: 1.25 },  // 높고 오른쪽 (2시)
+    { endTop: 70, endLeft: 40, endScale: 1.18 },  // 낮고 약간 왼쪽 (7시)
+    { endTop: 70, endLeft: 60, endScale: 1.18 },  // 낮고 약간 오른쪽 (5시)
+  ];
+  return zones[Math.floor(Math.random() * zones.length)];
+};
+
 const BattingGame = () => {
   const navigate = useNavigate();
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [isPitching, setIsPitching] = useState(false);
   const [pitchType, setPitchType] = useState<PitchType | null>(null);
   const [pitchLocation, setPitchLocation] = useState<'strike' | 'ball' | null>(null);
+  const [pitchTrajectory, setPitchTrajectory] = useState<PitchTrajectory | null>(null);
   const [lastResult, setLastResult] = useState<string | null>(null);
   const [currentSituation, setCurrentSituation] = useState<GameSituation | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -362,9 +404,10 @@ const BattingGame = () => {
     const selectedPitch = pitchTypes[Math.floor(Math.random() * pitchTypes.length)];
     setPitchType(selectedPitch);
     
-    // Random location (70% strike, 30% ball)
+    // Random location (70% strike, 30% ball) with trajectory
     const isStrike = Math.random() < 0.7;
     setPitchLocation(isStrike ? 'strike' : 'ball');
+    setPitchTrajectory(isStrike ? generateStrikeTrajectory() : generateBallTrajectory());
     
     // Slower pitch speeds for better visibility (was 400-700, now 800-1400)
     const pitchSpeed = selectedPitch === 'fastball' ? 800 : 
@@ -419,6 +462,7 @@ const BattingGame = () => {
       
       setPitchType(null);
       setPitchLocation(null);
+      setPitchTrajectory(null);
     }, pitchSpeed + 400);
     
     setPitchTimeoutId(timeoutId);
@@ -463,6 +507,7 @@ const BattingGame = () => {
     
     setPitchType(null);
     setPitchLocation(null);
+    setPitchTrajectory(null);
   }, [canSwing, isPitching, pitchLocation, determineHitResult, processHitResult]);
 
   const resetGame = () => {
@@ -529,12 +574,15 @@ const BattingGame = () => {
               </div>
 
               {/* Ball Animation */}
-              {isPitching && (
+              {isPitching && pitchTrajectory && (
                 <div 
-                  className={`absolute text-5xl z-10 ${pitchLocation === 'strike' ? 'animate-pitch-strike' : 'animate-pitch-ball'}`}
+                  className="absolute text-5xl z-10 animate-pitch-dynamic"
                   style={{ 
                     filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))',
-                  }}
+                    '--pitch-end-top': `${pitchTrajectory.endTop}%`,
+                    '--pitch-end-left': `${pitchTrajectory.endLeft}%`,
+                    '--pitch-end-scale': pitchTrajectory.endScale,
+                  } as React.CSSProperties}
                 >
                   ⚾
                 </div>
