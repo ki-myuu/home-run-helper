@@ -160,8 +160,8 @@
   }
 }
 
-/* Ball pitch animation - Strike zone */
-@keyframes pitch-ball {
+/* Dynamic ball pitch animation with CSS variables */
+@keyframes pitch-dynamic {
   0% {
     top: 15%;
     left: 50%;
@@ -169,33 +169,13 @@
     opacity: 1;
   }
   100% {
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%) scale(1.3);
+    top: var(--pitch-end-top, 60%);
+    left: var(--pitch-end-left, 50%);
+    transform: translateX(-50%) scale(var(--pitch-end-scale, 1.3));
     opacity: 1;
   }
 }
 
-/* Ball pitch animation - Outside (Ball) */
-@keyframes pitch-ball-outside {
-  0% {
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%) scale(0.4);
-    opacity: 1;
-  }
-  100% {
-    top: 65%;
-    left: 38%;
-    transform: translateX(-50%) scale(1.2);
-    opacity: 1;
-  }
-}
-
-.animate-pitch-strike {
-  animation: pitch-ball 1.2s ease-out forwards;
-}
-
-.animate-pitch-ball {
-  animation: pitch-ball-outside 1.2s ease-out forwards;
+.animate-pitch-dynamic {
+  animation: pitch-dynamic 1.2s ease-out forwards;
 }
